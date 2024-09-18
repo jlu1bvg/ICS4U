@@ -61,7 +61,6 @@ let functions = {
         return
     }
 }
-
 let choice = prompt("enter the budget: ")
 budget = parseInt(choice);
 
