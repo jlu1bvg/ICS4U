@@ -20,7 +20,7 @@ function AddBook(_title, _author, _year, _isAvailable){
 
 function ListBooks(){
     for (const i in library){
-        console.log(`${library[i].title} by {library[i].author}`)
+        console.log(`${library[i].title} by ${library[i].author}`)
     }
 }
 
@@ -43,7 +43,7 @@ function ReturnBook(bookName){
 function ListBooksByAuthor(author){
     for (const i in library){
         if(library[i].author == author){
-            console.log(`${library[i].title} by {library[i].author}`)
+            console.log(`${library[i].title} by ${library[i].author}`)
         }
     }
 }
@@ -51,7 +51,7 @@ function ListBooksByAuthor(author){
 function FindBooksBeforeYear(year){
     for (const i in library){
         if(library[i].year < year){
-            console.log(`${library[i].title} by {library[i].author}`)
+            console.log(`${library[i].title} by ${library[i].author}`)
         }
     }
 }
@@ -113,6 +113,7 @@ function PrintPrompt(){
 }
 
 while(choice != 8){
-    PrintPrompt();
     functions[choice]();
+    PrintPrompt();
+    choice = prompt("Enter here:")
 }
