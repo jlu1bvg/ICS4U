@@ -1,72 +1,70 @@
 const prompt = require("prompt-sync")()
 
-class Book{
+class Library{
     constructor(library){
-        this.library = [
-            { title: "1984", author: "George Orwell", year: 1949, isAvailable: true },
-            { title: "The Great Gatsby", author: "F. Scott Fitzgerald", year: 1925, isAvailable: true },
-            { title: "Moby Dick", author: "Herman Melville", year: 1851, isAvailable: true },
-            { title: "To Kill a Mockingbird", author: "Harper Lee", year: 1960, isAvailable: true },
-            { title: "Pride and Prejudice", author: "Jane Austen", year: 1813, isAvailable: true }
-        ];
+        this.library = library
     }
-}
 
-Book.prototype.AddBook = function(_title, _author, _year, _isAvailable){
-    let template = {
-        title: _title,
-        author: _author,
-        year: _year,
-        isAvailabe: _isAvailable
-    }
-    this.library.push(template)
-}
+    AddBook(_title, _author, _year, _isAvailable){
+        this.library.push(new Book(_title, _author, _year, _isAvailable))
+    }   
 
-Book.prototype.ListBooks = function(){
-    for (const i in this.library){
-        console.log(`${library[i].title} by ${library[i].author}`)
-    }
-}
-
-Book.prototype.BorrowBook = function(bookName){
-    for (const i in this.library){
-        if(library[i].title == bookName && library[i].isAvailable == true){
-            library[i].isAvailable = false
-        }
-    }
-}
-
-Book.prototype.ReturnBook = function(bookName){
-    for (const i in this.library){
-        if(library[i].title == bookName){
-            library[i].isAvailable = true
-        }
-    }
-}
-
-Book.prototype.ListBooksByAuthor = function(author){
-    for (const i in this.library){
-        if(library[i].author == author){
+    ListBooks(){
+        for (const i in this.library){
             console.log(`${library[i].title} by ${library[i].author}`)
         }
     }
-}
 
-Book.prototype.FindBooksBeforeYear = function(year){
-    for (const i in this.library){
-        if(library[i].year < year){
-            console.log(`${library[i].title} by ${library[i].author}`)
+    BorrowBook(bookName){
+        for (const i in this.library){
+            if(library[i].title == bookName && library[i].isAvailable == true){
+                library[i].isAvailable = false
+            }
+        }
+    }
+
+    ReturnBook(bookName){
+        for (const i in this.library){
+            if(library[i].title == bookName){
+                library[i].isAvailable = true
+            }
+        }
+    }
+
+    ListBooksByAuthor(author){
+        for (const i in this.library){
+            if(library[i].author == author){
+                console.log(`${library[i].title} by ${library[i].author}`)
+            }
+        }
+    }
+
+    FindBooksBeforeYear(year){
+        for (const i in this.library){
+            if(library[i].year < year){
+                console.log(`${library[i].title} by ${library[i].author}`)
+            }
+        }
+    }
+
+    RemoveBook(bookName){
+        for (const i in this.library){
+            if(library[i].title == bookName){
+                library.splice(i, 1)
+            }
         }
     }
 }
 
-Book.prototype.RemoveBook = function(bookName){
-    for (const i in this.library){
-        if(library[i].title == bookName){
-            library.splice(i, 1)
-        }
+class Book{
+    constructor(title, author, year, isAvailabe){
+        this.title = title,
+        this.author = author,
+        this.year = year,
+        this.isAvailabe = isAvailabe
     }
 }
+
 
 PrintPrompt()
 let choice = prompt("Enter here:")
@@ -82,8 +80,51 @@ function PrintPrompt(){
     console.log("8. Exit the program")
 }
 
+let library = new Library([])
+
+let choices = {
+    1: function(){
+        let title = prompt("Enter title: ")
+        let author = prompt("Enter author: ")
+        let year = prompt("Enter year: ")
+        let isAvailable = prompt("Enter availability: ")
+        library.AddBook(title, author, year, isAvailable)
+    },
+
+    2: function(){  
+        library.ListBooks()
+    },
+
+    3: function(){
+        let bookName = prompt("Enter book name: ")
+        library.BorrowBook(bookName)
+    },
+
+    4: function(){
+        let bookName = prompt("Enter book name: ")
+        library.ReturnBook(bookName)
+    },
+
+    5: function(){
+        let author = prompt("Enter author: ")
+        library.ListBooksByAuthor(author)
+    },
+
+    6: function(){
+        let year = prompt("Enter year: ")
+        library.FindBooksBeforeYear(year)
+    },
+
+    7: function(){
+        let bookName = prompt("Enter book name: ")
+        library.RemoveBook(bookName)
+    }   
+}
+
 while(choice != 8){
     functions[choice]();
     PrintPrompt();
     choice = prompt("Enter here:")
+
+    choices[choice]()
 }
